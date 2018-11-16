@@ -21,6 +21,7 @@ pathway_plot <- function(pathway){
           legend.text = element_text(size = 12))
   p
 }
+
 Read.GeneSets.db2 <- function (gs.db, thres.min = 2, thres.max = 2000) {
   ## read gmt files
   temp <- readLines(gs.db)
@@ -405,7 +406,9 @@ ggplot(d_tsne, aes(x=V1, y=V2)) +
         legend.text = element_text(size = 20))
 
 
-
 if (!requireNamespace("BiocManager", quietly = TRUE))
   install.packages("BiocManager")
 BiocManager::install("rWikiPathways", version = "3.8")
+                    
+                    
+                    
