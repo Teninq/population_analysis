@@ -6,6 +6,7 @@ library(dplyr)
 library(Rtsne)
 library(wordcloud2)
 library(org.Hs.eg.db)
+
 pathway_plot <- function(pathway){
   colnames(pathway) <- c("Pathway_ID","FDR")
   pathway$logp <- -log2(pathway$FDR)
@@ -67,6 +68,7 @@ African.loss <- apply(African, 2,sum)
 African.genes <- row.names(African)
 # write.table(as.matrix(row.names(African)),row.names = F,col.names = F,quote = F,file = "African.genes.txt")
 summary(African.loss)
+
 African.indi.genes.list <- apply(African.raw, 2, function(x){row.names(African.raw)[x>0]})
 all.pathway.geneset <- Read.GeneSets.db2("wikipathways-20181010-gmt-Homo_sapiens.gmt.txt")$gs
 names(all.pathway.geneset) <- sapply(names(all.pathway.geneset), function(x){unlist(strsplit(x,"%"))[1]})
@@ -155,6 +157,7 @@ ggplot(data.mean, aes(name,mean,fill=name)) +
         axis.title.y=element_text(size = 15),
         legend.text = element_text(size = 12))
 
+
 ####unique genes
 African.unique <- setdiff(African.genes,c(Ashkenazi_Jewish.genes,East_Asian.genes,European.Finnish.genes,
                                           European.Non.Finnish.genes,Latino.genes,South_Asian.genes))
@@ -188,6 +191,7 @@ all.uniq.mean <- c(length(African.unique)/ncol(African.raw),length(Ashkenazi_Jew
 all.uniq.mean <- round(all.uniq.mean,2)
 data.uniq <- data.frame(name = names(all.mean),uniq = all.uniq,uniqmean = all.uniq.mean)
 data.uniq <- dplyr::mutate(data.uniq,loguniq= log(uniq+1),loguniqmean = log(uniqmean+1))
+
 ggplot(data.uniq, aes(name,loguniqmean,fill=name)) + 
   geom_bar(stat="identity", width = 0.5,position ="dodge")+
   geom_text(aes(x=name,y=loguniqmean+loguniqmean/15,label=uniqmean),position=position_dodge(.7),size=8)+
@@ -320,6 +324,7 @@ MutualExclusivity <- function(Part.mutual.exclusity.mat){
                      include.lowest = T)
   return(res2)
 }
+
 MutualExclusivity_plot <- function(Part.mutual.exclusity.mat,cc){
   E <- t(Part.mutual.exclusity.mat)
   g <- colnames(E)
