@@ -7,6 +7,7 @@ library(Rtsne)
 library(wordcloud2)
 library(org.Hs.eg.db)
 
+
 pathway_plot <- function(pathway){
   colnames(pathway) <- c("Pathway_ID","FDR")
   pathway$logp <- -log2(pathway$FDR)
